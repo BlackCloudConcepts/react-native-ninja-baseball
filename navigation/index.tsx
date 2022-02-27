@@ -4,11 +4,13 @@
  *
  */
 import { FontAwesome } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
+import { ColorSchemeName, Pressable, Image } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -18,6 +20,8 @@ import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
+
+import logo from '../assets/images/ninjacow_blackcloud_bluered.png'; 
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -66,8 +70,11 @@ function BottomTabNavigator() {
         name="TabOne"
         component={TabOneScreen}
         options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          title: 'Prediction Trials',
+          tabBarIcon: ({ color }) => <TabBarIconAnt name="dotchart" color={color} />,
+          headerLeft: () => (
+            <Image source={logo} style={{ width: 55, height: 42 }} />
+          ),
           headerRight: () => (
             <Pressable
               onPress={() => navigation.navigate('Modal')}
@@ -87,10 +94,27 @@ function BottomTabNavigator() {
       <BottomTab.Screen
         name="TabTwo"
         component={TabTwoScreen}
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
+        options={({ navigation }: RootTabScreenProps<'TabTwo'>) => ({
+          title: 'Consistency Analysis',
+          tabBarIcon: ({ color }) => <TabBarIconMaterial name="form-select" color={color} />,
+          headerLeft: () => (
+            <Image source={logo} style={{ width: 55, height: 42 }} />
+          ),
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Modal')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}>
+              <FontAwesome
+                name="info-circle"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
       />
     </BottomTab.Navigator>
   );
@@ -104,4 +128,18 @@ function TabBarIcon(props: {
   color: string;
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
+}
+
+function TabBarIconAnt(props: {
+  name: React.ComponentProps<typeof AntDesign>['name'];
+  color: string;
+}) {
+  return <AntDesign name="dotchart" size={24} color="black" />
+}
+
+function TabBarIconMaterial(props: {
+  name: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
+  color: string;
+}) {
+  return <MaterialCommunityIcons name="form-select" size={24} color="black" />
 }
