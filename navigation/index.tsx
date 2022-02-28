@@ -18,6 +18,7 @@ import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
+import TabThreeScreen from '../screens/TabThreeScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 
@@ -96,6 +97,31 @@ function BottomTabNavigator() {
         component={TabTwoScreen}
         options={({ navigation }: RootTabScreenProps<'TabTwo'>) => ({
           title: 'Consistency Analysis',
+          tabBarIcon: ({ color }) => <TabBarIconMaterial name="form-select" color={color} />,
+          headerLeft: () => (
+            <Image source={logo} style={{ width: 55, height: 42 }} />
+          ),
+          headerRight: () => (
+            <Pressable
+              onPress={() => navigation.navigate('Modal')}
+              style={({ pressed }) => ({
+                opacity: pressed ? 0.5 : 1,
+              })}>
+              <FontAwesome
+                name="info-circle"
+                size={25}
+                color={Colors[colorScheme].text}
+                style={{ marginRight: 15 }}
+              />
+            </Pressable>
+          ),
+        })}
+      />
+      <BottomTab.Screen
+        name="TabThree"
+        component={TabThreeScreen}
+        options={({ navigation }: RootTabScreenProps<'TabThree'>) => ({
+          title: 'Data',
           tabBarIcon: ({ color }) => <TabBarIconMaterial name="form-select" color={color} />,
           headerLeft: () => (
             <Image source={logo} style={{ width: 55, height: 42 }} />
