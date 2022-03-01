@@ -121,7 +121,7 @@ function BottomTabNavigator() {
         name="TabThree"
         component={TabThreeScreen}
         options={({ navigation }: RootTabScreenProps<'TabThree'>) => ({
-          title: 'Data',
+          title: 'Selection',
           tabBarIcon: ({ color }) => <TabBarIconMaterial name="form-select" color={color} />,
           headerLeft: () => (
             <Image source={logo} style={{ width: 55, height: 42 }} />
