@@ -6,6 +6,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
 export default function TabThreeScreen() {
+  const initTime = Date.now();
   const [valueA, setValueA] = useState<any>(null);
   const [errorA, setErrorA] = useState(null);
   const [loadingA, setLoadingA] = useState(true);
@@ -17,12 +18,12 @@ export default function TabThreeScreen() {
         {}
       );
       const json = await response.json();
-      // console.log(json);
+      //console.log(json);
       setValueA(json);
     // } catch (e) {
     //   setErrorA(e);
     } finally {
-      setLoadingA(false);
+      // setLoadingA(false);
     }
   }
 
@@ -33,11 +34,11 @@ export default function TabThreeScreen() {
   function returnLoop(){
     let rows = [];
     if (valueA){
-      for (var i = valueA.length - 1; i >= 0; i--) {
+      for (var i = valueA.length - 1; i >= valueA.length-20; i--) {
         var dte = new Date(valueA[i].date_local);
-          rows.push(<Text>
-            {dte.getMonth()}/{dte.getDate()}/{dte.getFullYear()}&nbsp;-&nbsp;{valueA[i].name}
-          </Text>)
+        rows.push(<Text key={valueA[i].id+initTime}>
+          {dte.getMonth()}/{dte.getDate()}/{dte.getFullYear()}&nbsp;-&nbsp;{valueA[i].name}
+        </Text>)
       }
     }
     return(rows);
